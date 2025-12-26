@@ -1,0 +1,7 @@
+
+spring:
+  application:
+    name: Security Testing
+jwt:
+  secret: 901dbae2c78b8433ee07c8c0b24e663b24cbbaef6ddfa8df0a627c2ababd3848
+  expiration: 15
