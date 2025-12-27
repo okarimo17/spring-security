@@ -1,0 +1,15 @@
+
+spring:
+  application:
+    name: Security Testing
+  security.oauth2.client:
+    registration.key_clock:
+      client-id: spring-app
+      scope:
+        - openid
+        - profile
+        - email
+      client-secret: bfUDnhWW2inJfLae8Hp1P86YfrP17Xgg
+      redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+    provider.key_clock:
+      issuer-uri: http://localhost:8081/realms/spring-realm
