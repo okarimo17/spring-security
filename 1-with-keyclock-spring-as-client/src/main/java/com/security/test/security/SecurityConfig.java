@@ -11,6 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -33,7 +35,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         return http
                 .authorizeHttpRequests(
                         authorizeRequests ->
@@ -47,6 +49,12 @@ public class SecurityConfig {
                                 .oidcUserService(customOidcUserService)
                         )
                 )
+                .logout((logout) -> {
+                    var logoutSuccessHandler =
+                            new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+                    logoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}/");
+                    logout.logoutSuccessHandler(logoutSuccessHandler);
+                })
                 .build();
     }
 
