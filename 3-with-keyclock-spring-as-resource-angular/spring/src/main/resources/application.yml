@@ -1,0 +1,26 @@
+
+spring:
+  application:
+    name: Security Testing
+  security.oauth2:
+    resourceserver:
+      jwt:
+        issuer-uri:  http://localhost:8081/realms/spring-realm
+        jwk-set-uri: http://localhost:8081/realms/spring-realm/protocol/openid-connect/certs
+
+
+
+logging.level.org.springframework.security: DEBUG
+logging.level.org.springframework.security.oauth2: DEBUG
+
+#    client:
+#      registration.key_clock:
+#        client-id: spring-resource
+#        scope:
+#          - openid
+#          - profile
+#          - email
+#        client-secret: DjmwJN4TFqRmXSea3mI7cCDDQPthGJfl
+#        redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+#      provider.key_clock:
+#        issuer-uri: http://localhost:8081/realms/spring-realm
