@@ -1,15 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { OAuthService, UserInfo } from 'angular-oauth2-oidc';
 import { authConfig } from './config/AuthConfig';
 import { AppService } from './app-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   imports: [],
   templateUrl: './app.html'
 })
-export class App {
+export class App implements OnDestroy {
 
   private readonly authService = inject(OAuthService);
   readonly appService = inject(AppService);
@@ -20,6 +21,8 @@ export class App {
   isAuthenticated = signal(false);
   user = signal<ProfileInfo | null>(null);
   apiResult = signal<string|null>('null');
+  private accountSub?: Subscription;
+  private dashboardSub?: Subscription;
 
   login(){
     this.authService.initCodeFlow();
@@ -33,7 +36,8 @@ export class App {
 
 
   accountApi(){
-    this.appService.account().subscribe({
+    this.accountSub?.unsubscribe();
+    this.accountSub = this.appService.account().subscribe({
       next: (data) => {
         this.apiResult.set(`Success: ${JSON.stringify(data)}`);
       },
@@ -44,7 +48,8 @@ export class App {
   }
 
   dashboardApi(){
-    this.appService.dashboard().subscribe({
+    this.dashboardSub?.unsubscribe();
+    this.dashboardSub = this.appService.dashboard().subscribe({
       next: (data) => {
         this.apiResult.set(`Success: ${JSON.stringify(data)}`);
       },
@@ -59,10 +64,6 @@ export class App {
   constructor(){
     console.log("App component initialized");
     this.configure();
-
-  
-
-
   }
 
   configure() {
@@ -105,4 +106,9 @@ export class App {
     this.user.set(profile.info);
   }
 
+
+  ngOnDestroy(){
+    this.accountSub?.unsubscribe();
+    this.dashboardSub?.unsubscribe();
+  }
 }
