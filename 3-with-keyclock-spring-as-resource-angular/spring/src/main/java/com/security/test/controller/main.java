@@ -2,6 +2,7 @@ package com.security.test.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,14 +30,14 @@ public class main {
 
     @GetMapping("/dashboard")
     @PreAuthorize("hasRole('ADMIN')")
-    public String dashboardPage(JwtAuthenticationToken jwt) {
-        return "Only admin Dashboard of  "+   jwt.getTokenAttributes().get("name") +  "   "+ jwt.getTokenAttributes().get("email")+ "  "+ jwt.getAuthorities()+ "   ";
+    public ResponseEntity<String> dashboardPage(JwtAuthenticationToken jwt) {
+        return ResponseEntity.ok("Only admin Dashboard of  "+   jwt.getTokenAttributes().get("name") +  "   "+ jwt.getTokenAttributes().get("email")+ "  "+ jwt.getAuthorities()+ "   ");
     }
 
 
     @GetMapping("/account")
-    public String accountPage(JwtAuthenticationToken jwt, Authentication auth) {
-        return "Account of  "+  jwt.getPrincipal() + "   ( "+ jwt.getTokenAttributes().get("name") +" )  "+ jwt.getAuthorities()+ "  ";
+    public ResponseEntity<String> accountPage(JwtAuthenticationToken jwt, Authentication auth) {
+        return ResponseEntity.ok("Account of  "+  jwt.getPrincipal() + "   ( "+ jwt.getTokenAttributes().get("name") +" )  "+ jwt.getAuthorities()+ "  ");
     }
 
     @GetMapping("/me")
