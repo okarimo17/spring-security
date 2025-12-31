@@ -6,6 +6,10 @@ spring:
     resourceserver:
       jwt:
         jwk-set-uri: http://localhost:8081/realms/spring-realm/protocol/openid-connect/certs
+gateways:
+  adminRoute: http://localhost:3001
+  userRoute: http://localhost:3002
+
 
 #  cloud:
 #    gateway:

@@ -17,26 +17,6 @@ import java.util.Set;
 @Service
 public class CustomJWTConverter implements Converter<Jwt, AbstractAuthenticationToken> {
 
-//    @Override
-//    public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
-//        OidcUser oidcUser =  super.loadUser(userRequest);
-//        Set<GrantedAuthority> grantedAuthorities =  new HashSet<GrantedAuthority>(oidcUser.getAuthorities());
-//
-//        Map<String, Object> realmAccess = (Map<String, Object>) oidcUser.getAttributes().get("realm_access");
-//        if(realmAccess!= null) {
-//            List<String> roles = (List<String>) realmAccess.get("roles");
-//            for(String role : roles) {
-//                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+role));
-//            }
-//        }
-//
-//        return new DefaultOidcUser(
-//            grantedAuthorities,
-//            oidcUser.getIdToken(),
-//            oidcUser.getUserInfo()
-//        );
-//    }
-
     @Override
     public AbstractAuthenticationToken convert(Jwt jwtSource) {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();

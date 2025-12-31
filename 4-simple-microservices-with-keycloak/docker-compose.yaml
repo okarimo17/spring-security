@@ -51,6 +51,9 @@ services:
     environment:
       SERVER_PORT: 8080
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak-auth:8080/realms/spring-realm/protocol/openid-connect/certs
+      GATEWAYS_ADMINROUTE: http://admin-service:3001/
+      GATEWAYS_USERROUTE: http://user-service:3002/
+
 
     networks:
       - micro-serv
