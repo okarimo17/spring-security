@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         return http
-                .authorizeExchange(exchanges -> exchanges
+                .authorizeExchange(exchanges -> exchanges                        
                         .anyExchange().permitAll()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
