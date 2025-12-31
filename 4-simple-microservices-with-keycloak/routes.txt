@@ -1,0 +1,2 @@
+- admin-service => / : only for users with admin role
+- user-service => only for all authenticated users: (/account, /me)

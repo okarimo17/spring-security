@@ -25,9 +25,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeRequests ->
                                 authorizeRequests
-                                        .requestMatchers("/","/login","/me","favicon.ico").permitAll()         // Allow root
-                                        .requestMatchers("/dashboard").authenticated()    // MUST allow login page
-                                        .anyRequest().authenticated()             // Everything else locked
+                                        .requestMatchers("/","favicon.ico").permitAll()
+                                        .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
                     oauth2ResourceServer.jwt(jwtConfigurer ->

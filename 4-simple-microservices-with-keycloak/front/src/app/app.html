@@ -1,0 +1,72 @@
+<style>
+  :host {
+    display: flex;
+    height: 100vh;
+  }
+</style>
+
+<main class="main flex flex-col">
+  <div class="content">
+    <div class="left-side mx-4">
+      <h1>Hello, {{user()?.given_name ?? '?'}}</h1>
+      <p>Congratulations! Your app is running. 🎉</p>
+    </div>
+    <div class="divider" role="separator" aria-label="Divider"></div>
+    <div class="right-side flex-1 flex items-center gap-2 mx-4">
+
+      @if (isAuthInit()) {
+
+      <div class="flex gap-4 flex-col">
+      @if (isAuthenticated()) {
+      <p>You are logged in.</p>
+      <button (click)="logout()" class="pill" target="_blank" rel="noopener">
+        <span>Logout</span>
+        <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor"
+          class="ms-2">
+          <path
+            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
+        </svg>
+      </button>
+      } @else {
+      <p>You are not logged in.</p>
+
+      <button class="pill" target="_blank" rel="noopener" (click)="login()">
+        <span>Login</span>
+        <svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 -960 960 960" width="14" fill="currentColor"
+          class="ms-2">
+          <path
+            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />
+        </svg>
+      </button>
+
+      }
+
+      </div>
+
+      } @else {
+      <p>Loading authentication...</p>
+      }
+
+
+    </div>
+  </div>
+
+  @if(isAuthenticated()){
+    <div class="flex flex-col gap-2 items-center">
+      <div class="flex gap-4">
+        <button (click)="accountApi()" class="pill" target="_blank" rel="noopener">
+          <span>User Api</span>
+        </button>
+        <button (click)="dashboardApi()" class="pill" target="_blank" rel="noopener">
+          <span>Only-admin Api</span>
+        </button>
+      </div>
+      @if(apiResult()){
+        <div class="resul mt-4">
+          apiResult: {{apiResult()}}
+        </div>
+      }
+
+    </div>
+  }
+</main>

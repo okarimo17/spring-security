@@ -1,0 +1,21 @@
+server.port: 8080
+spring:
+  application:
+    name: Security Testing
+  security.oauth2:
+    resourceserver:
+      jwt:
+        jwk-set-uri: http://localhost:8081/realms/spring-realm/protocol/openid-connect/certs
+
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: admin-service
+#          predicates:
+#            - Path=/admin/**
+#          uri: http://localhost:8001/
+#
+#        - id: user-service
+#          predicates:
+#            - Path=/user/**
+#          uri: http://localhost:8002/

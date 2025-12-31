@@ -1,6 +1,4 @@
 
-
-
 services:
   auth:
     image: quay.io/keycloak/keycloak:26.4.7
@@ -10,8 +8,8 @@ services:
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HOSTNAME_STRICT: false
     volumes:
       - ./keycloak_data:/opt/keycloak/data
     command:
       - start-dev
-

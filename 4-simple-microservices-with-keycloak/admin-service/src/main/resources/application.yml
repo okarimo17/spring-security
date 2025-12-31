@@ -1,0 +1,16 @@
+server.port: 3001
+
+spring:
+  application:
+    name: Security Testing
+  security.oauth2:
+    resourceserver:
+      jwt:
+        jwk-set-uri: http://localhost:8081/realms/spring-realm/protocol/openid-connect/certs
+#        issuer-uri:  http://localhost:8081/realms/spring-realm
+
+
+
+logging.level.org.springframework.security: DEBUG
+logging.level.org.springframework.security.oauth2: DEBUG
+

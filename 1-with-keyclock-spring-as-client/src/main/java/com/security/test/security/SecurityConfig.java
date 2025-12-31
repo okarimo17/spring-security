@@ -40,9 +40,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeRequests ->
                                 authorizeRequests
-                                        .requestMatchers("/","/login","/me","favicon.ico").permitAll()         // Allow root
-                                        .requestMatchers("/dashboard").authenticated()    // MUST allow login page
-                                        .anyRequest().authenticated()             // Everything else locked
+                                        .requestMatchers("/","/login","/me","favicon.ico").permitAll()
+                                        .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth -> oauth
                         .userInfoEndpoint(userInfo -> userInfo

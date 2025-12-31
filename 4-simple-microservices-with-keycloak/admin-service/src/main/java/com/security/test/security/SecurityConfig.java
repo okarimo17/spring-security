@@ -30,15 +30,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeRequests ->
                                 authorizeRequests
-                                        .requestMatchers("/","favicon.ico").permitAll()
-                                        .anyRequest().authenticated()
+                                        .requestMatchers("/test").permitAll()
+                                        .anyRequest().hasRole("ADMIN")
                 )
                 .oauth2ResourceServer(oauth2ResourceServer ->
                     oauth2ResourceServer.jwt(jwtConfigurer ->
                         jwtConfigurer.jwtAuthenticationConverter(customJWTConverter)
                     )
                 )
-                .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
@@ -46,17 +45,5 @@ public class SecurityConfig {
 
 
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration cfg = new CorsConfiguration();
-        cfg.setAllowedOrigins(List.of("http://localhost:4200"));
-        cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-        cfg.setAllowedHeaders(List.of("Authorization","Content-Type"));
-        cfg.setExposedHeaders(List.of("Authorization"));
-        cfg.setAllowCredentials(true); // only if you need cookies
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", cfg);
-        return source;
-    }
 
 }

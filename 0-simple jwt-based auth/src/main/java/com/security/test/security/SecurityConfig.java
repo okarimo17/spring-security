@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorizeRequests ->
                                 authorizeRequests
-                                        .requestMatchers("/","/login","favicon.ico").permitAll()         // Allow root
-                                        .requestMatchers("/dashboard").authenticated()    // MUST allow login page
-                                        .anyRequest().authenticated()             // Everything else locked
+                                        .requestMatchers("/","/login","favicon.ico").permitAll()
+                                        .requestMatchers("/dashboard").authenticated()
+                                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class )
                 .build();

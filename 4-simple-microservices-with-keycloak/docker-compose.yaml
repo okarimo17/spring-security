@@ -1,0 +1,61 @@
+
+
+
+services:
+
+  keycloak-auth:
+    image: quay.io/keycloak/keycloak:26.4.7
+    container_name: keycloak-auth
+    ports:
+      - "8081:8080"
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HOSTNAME_STRICT: false
+    volumes:
+      - ../keycloak_data:/opt/keycloak/data
+    command:
+      - start-dev
+    networks:
+      - micro-serv
+
+  admin-service:
+    container_name: admin-service
+    image: micro-serv/admin-service:v1
+    ports:
+      - 3001:3001
+    environment:
+      SERVER_PORT: 3001
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak-auth:8080/realms/spring-realm/protocol/openid-connect/certs
+
+    networks:
+      - micro-serv
+
+  user-service:
+    container_name: user-service
+    image: micro-serv/user-service:v1
+    ports:
+      - 3002:3002
+    environment:
+      SERVER_PORT: 3002
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak-auth:8080/realms/spring-realm/protocol/openid-connect/certs
+
+    networks:
+      - micro-serv
+
+  api-gateway:
+    container_name: api-gateway
+    image: micro-serv/api-gateway:v1
+    ports:
+      - 8080:8080
+    environment:
+      SERVER_PORT: 8080
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak-auth:8080/realms/spring-realm/protocol/openid-connect/certs
+
+    networks:
+      - micro-serv
+
+networks:
+  micro-serv:
+    driver: bridge
+
